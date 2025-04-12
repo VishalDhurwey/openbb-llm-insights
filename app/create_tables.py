@@ -25,9 +25,15 @@ try:
     conn = psycopg2.connect(DATABASE_URL)
     cur = conn.cursor()
     cur.execute(schema)
+
+    # Ensure the sequence is correctly set to the last 'id' in the table
+    cur.execute("""
+        SELECT setval('daily_metrics_id_seq', (SELECT MAX(id) FROM daily_metrics));
+    """)
+
     conn.commit()
     cur.close()
     conn.close()
-    print("✅ Tables created successfully.")
+    print("✅ Tables created and sequence set to the last id successfully.")
 except Exception as e:
     print("❌ Error:", e)

@@ -25,7 +25,7 @@ Data:
             "Content-Type": "application/json"
         },
         json={
-            "model": "mistralai/mistral-7b-instruct",  # or try others!
+            "model": "mistralai/mistral-7b-instruct",
             "messages": [{"role": "user", "content": prompt}],
             "temperature": 0.7
         }
