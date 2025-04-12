@@ -1,0 +1,10 @@
+{
+    "build": {
+      "builder": "NIXPACKS",
+      "nixpacksPlan": {
+        "start": "python app/scheduler.py"
+      }
+    },
+    "start": "python app/scheduler.py"
+  }
+  
