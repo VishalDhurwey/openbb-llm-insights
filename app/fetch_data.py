@@ -1,23 +1,18 @@
+# fetch_data.py
 from openbb import obb
 import psycopg2
 import os
 import json
 from datetime import date
 from dotenv import load_dotenv
-from db import metrics_exist_for_today  # Add import to check if today's data exists
 
 load_dotenv()
 DATABASE_URL = os.getenv("DATABASE_URL")
 
-# List of tickers to fetch
-tickers = ["AAPL", "MSFT", "NVDA", "AMZN", "TSLA", "GOOGL", "META", "JNJ", "UNH"]
-records = []
+def fetch_and_store_metrics():
+    tickers = ["AAPL", "MSFT", "NVDA", "AMZN", "TSLA", "GOOGL", "META", "JNJ", "UNH"]
+    records = []
 
-# Check if today's data already exists
-if metrics_exist_for_today():
-    print("✅ Metrics for today already exist. Skipping data fetch.")
-else:
-    # Fetch each ticker's data
     for ticker in tickers:
         try:
             result = obb.equity.price.historical(symbol=ticker, provider="yfinance", period="1d")
@@ -43,7 +38,10 @@ else:
         except Exception as e:
             print(f"⚠️ Error fetching {ticker}: {e}")
 
-    # Insert into PostgreSQL
+    if not records:
+        print("⚠️ No records to insert.")
+        return
+
     try:
         conn = psycopg2.connect(DATABASE_URL)
         cur = conn.cursor()

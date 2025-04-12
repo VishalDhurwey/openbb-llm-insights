@@ -1,6 +1,6 @@
 from db import get_latest_metrics, save_llm_output, metrics_exist_for_today
 from llm_analysis import analyze_with_llm
-import fetch_data  # Importing fetch_data script to fetch and insert the data
+from fetch_data import fetch_and_store_metrics
 
 def run():
     # Step 1: Check if today's metrics exist in the database
@@ -8,8 +8,7 @@ def run():
         print("✅ Metrics for today already exist. Skipping data fetch.")
     else:
         print("📥 Fetching data from OpenBB...")
-        # Trigger the fetch_data.py functionality to fetch and insert today's data
-        fetch_data  # This runs the entire fetch process from fetch_data.py
+        fetch_and_store_metrics()
 
     # Step 2: Query today's metrics from the database
     print("📊 Querying today’s metrics...")
