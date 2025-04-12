@@ -2,3 +2,4 @@ openbb
 psycopg2-binary
 openai
 python-dotenv
+flask

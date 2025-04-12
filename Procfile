@@ -1,1 +1,1 @@
-worker: python app/scheduler.py
+web: python app/server.py
